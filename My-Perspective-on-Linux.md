@@ -1,5 +1,148 @@
 # My Perspective on Linux
 
+## 基本命令
+
+```shell
+$ date
+Mon Apr  8 11:21:24 DST 2019
+$ cal
+     April 2019
+Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6
+ 7  8  9 10 11 12 13
+14 15 16 17 18 19 20
+21 22 23 24 25 26 27
+28 29 30
+
+$ cal 2019
+                            2019
+      January               February               March
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+       1  2  3  4  5                  1  2                  1  2
+ 6  7  8  9 10 11 12   3  4  5  6  7  8  9   3  4  5  6  7  8  9
+13 14 15 16 17 18 19  10 11 12 13 14 15 16  10 11 12 13 14 15 16
+20 21 22 23 24 25 26  17 18 19 20 21 22 23  17 18 19 20 21 22 23
+27 28 29 30 31        24 25 26 27 28        24 25 26 27 28 29 30
+                                            31
+
+       April                  May                   June
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6            1  2  3  4                     1
+ 7  8  9 10 11 12 13   5  6  7  8  9 10 11   2  3  4  5  6  7  8
+14 15 16 17 18 19 20  12 13 14 15 16 17 18   9 10 11 12 13 14 15
+21 22 23 24 25 26 27  19 20 21 22 23 24 25  16 17 18 19 20 21 22
+28 29 30              26 27 28 29 30 31     23 24 25 26 27 28 29
+                                            30
+
+        July                 August              September
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6               1  2  3   1  2  3  4  5  6  7
+ 7  8  9 10 11 12 13   4  5  6  7  8  9 10   8  9 10 11 12 13 14
+14 15 16 17 18 19 20  11 12 13 14 15 16 17  15 16 17 18 19 20 21
+21 22 23 24 25 26 27  18 19 20 21 22 23 24  22 23 24 25 26 27 28
+28 29 30 31           25 26 27 28 29 30 31  29 30
+
+
+      October               November              December
+Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa  Su Mo Tu We Th Fr Sa
+       1  2  3  4  5                  1  2   1  2  3  4  5  6  7
+ 6  7  8  9 10 11 12   3  4  5  6  7  8  9   8  9 10 11 12 13 14
+13 14 15 16 17 18 19  10 11 12 13 14 15 16  15 16 17 18 19 20 21
+20 21 22 23 24 25 26  17 18 19 20 21 22 23  22 23 24 25 26 27 28
+27 28 29 30 31        24 25 26 27 28 29 30  29 30 31
+
+$ cal 1 2019
+    January 2019
+Su Mo Tu We Th Fr Sa
+       1  2  3  4  5
+ 6  7  8  9 10 11 12
+13 14 15 16 17 18 19
+20 21 22 23 24 25 26
+27 28 29 30 31
+```
+
+
+
+---
+
+
+
+## 文件结构
+
+```shell
+$ pwd
+/home/wangyuxiang0829
+$ cd /
+$ ls
+bin   dev  home  lib    lib64   media  opt   root  sbin  sys  usr
+boot  etc  init  lib32  libx32  mnt    proc  run   srv   tmp  var
+$ ls -l
+###
+d 目录
+- 文件
+l 连接
+###
+total 88
+lrwxrwxrwx  1 root root     7 Feb 20 00:30 bin -> usr/bin
+drwxr-xr-x  1 root root   512 Nov 29 21:49 boot
+drwxr-xr-x  1 root root   512 Apr  8 11:21 dev
+drwxr-xr-x  1 root root   512 Apr  6 22:18 etc
+drwxr-xr-x  1 root root   512 Apr  6 22:18 home
+-rwxr-xr-x  1 root root 87944 Jan  1  1970 init
+lrwxrwxrwx  1 root root     7 Feb 20 00:30 lib -> usr/lib
+lrwxrwxrwx  1 root root     9 Feb 20 00:30 lib32 -> usr/lib32
+lrwxrwxrwx  1 root root     9 Feb 20 00:30 lib64 -> usr/lib64
+lrwxrwxrwx  1 root root    10 Feb 20 00:30 libx32 -> usr/libx32
+drwxr-xr-x  1 root root   512 Feb 20 00:30 media
+drwxr-xr-x  1 root root   512 Apr  6 22:17 mnt
+drwxr-xr-x  1 root root   512 Feb 20 00:30 opt
+dr-xr-xr-x  9 root root     0 Apr  8 11:21 proc
+drwx------  1 root root   512 Feb 20 00:30 root
+drwxr-xr-x  1 root root   512 Apr  8 11:21 run
+lrwxrwxrwx  1 root root     8 Feb 20 00:30 sbin -> usr/sbin
+drwxr-xr-x  1 root root   512 Feb 20 00:30 srv
+dr-xr-xr-x 12 root root     0 Apr  8 11:21 sys
+drwxrwxrwt  1 root root   512 Feb 20 00:34 tmp
+drwxr-xr-x  1 root root   512 Feb 20 00:30 usr
+drwxr-xr-x  1 root root   512 Feb 20 00:30 var
+$ cd ~ # 切换到家目录
+$ mkdir tutorial # 创建目录
+$ ls
+tutorial # 创建的目录
+$ cd tutorial/
+$ ls # 目录为空
+$ touch file1.txt # 创建文件
+$ touch file2.txt # 创建文件
+$ ls
+file1.txt  file2.txt # 创建的文件
+$ vim file1.txt
+$ vim file2.txt
+$ cat file1.txt # 输出文件内容
+hello1
+$ cat file2.txt # 输出文件内容
+hello2
+$ cp file1.txt file3.txt # 复制文件
+$ ls
+file1.txt  file2.txt  file3.txt
+$ cat file1.txt
+hello1
+$ cat file3.txt
+hello1
+$ diff file1.txt file2.txt # 列出文件之间的不同之处
+1c1
+< hello1
+---
+> hello2
+$ diff file1.txt file3.txt
+$ rmdir tutorial/ # 删除目录
+```
+
+
+
+---
+
+
+
 ## 变量
 
 ### 普通变量
@@ -31,6 +174,10 @@ $ PATH=$PATH:/home/wangyuxiang0829/workspace ##添加某个路径进环境变量
 
 
 
+---
+
+
+
 ## 打包与解包
 
 ### zip与unzip
@@ -53,6 +200,10 @@ GNU 'tar' saves many files together into a single tape or disk archive, and can 
   tar -tvf archive.tar         # List all files in archive.tar verbosely.
   tar -xf archive.tar          # Extract all files from archive.tar.
 ```
+
+
+
+---
 
 
 
@@ -92,6 +243,10 @@ Compress or uncompress FILEs (by default, compress FILES in-place).
 ## Examples:
 	gzip -d filename.tar.gz		# 将会生成filename.tar文件
 ```
+
+
+
+---
 
 
 
