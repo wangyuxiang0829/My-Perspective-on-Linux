@@ -198,11 +198,86 @@ dr-xr-xr-x 12 root root     0 Apr  8 11:21 sys
 drwxrwxrwt  1 root root   512 Feb 20 00:34 tmp
 drwxr-xr-x  1 root root   512 Feb 20 00:30 usr
 drwxr-xr-x  1 root root   512 Feb 20 00:30 var
+$ cd ~
+$ ls
+$ touch file1.txt # 创建文件
+$ ls
+file1.txt # 刚创建的文件
+$ ls -l file1.txt # 列出文件属性
+-rw-rw-rw- 1 wangyuxiang0829 wangyuxiang0829   0 Apr 10 22:49 file1.txt
+$ chmod 777 file1.txt # 更改文件权限
+$ ls -l file1.txt
+-rwxrwxrwx 1 wangyuxiang0829 wangyuxiang0829   0 Apr 10 22:49 file1.txt
+$ chmod 000 file1.txt
+$ ls -l file1.txt
+---------- 1 wangyuxiang0829 wangyuxiang0829   0 Apr 10 22:49 file1.txt
 ```
 
 
 
 ---
+
+
+
+## grep命令与正则表达式
+
+
+
+> `$ ls`
+> invictus
+> `$ cat invictus`
+> Out of the night that covers me,
+>
+> Black as the pit from pole to pole,
+> I thank whatever gods may be,
+> For my unconquerable soul,
+> In the fell clutch of circumstance,
+> I have not winced nor cried aloud,
+> Under the bludgeoning of chance,
+> My head if bloody, but unbowed,
+>
+> Beyond this place of wrath and tear,
+>
+> Looms but the Horror of the shade,
+> And yet the menace of the years,
+> Finds, and shall find, me unafraid,
+> It matters not how strait the gate,
+> How charged with punishments the scroll,
+> I am the master of my fate,
+> I am the captain of my soul.
+> `$ grep Out invictus` # 在指定文件中查找所有与字符串"Out"匹配的行
+>
+> **`Out`** of the night that covers me,
+> `$ grep of invictus` # 在指定文件中查找所有与字符串"of"匹配的行
+> Out **`of`** the night that covers me,
+> In the fell clutch **`of`** circumstance,
+> Under the bludgeoning **`of`** chance,
+> Beyond this place **`of`** wrath and tear,
+> Looms but the Horror **`of`** the shade,
+> And yet the menace **`of`** the years,
+> I am the master **`of`** my fate,
+> I am the captain **`of`** my soul.
+> `$ grep c.*n invictus` # 正则表达式，表示字符'c'与'n'之间含有零个或多个任意字符
+> For my un**`con`**querable soul,
+> In the fell **`clutch of circumstan`**ce,
+> I have not win**`ced n`**or cried aloud,
+> Under the bludgeoning of **`chan`**ce,
+> Beyond this pla**`ce *of wrath an`**d tear,
+> How **`charged with punishmen`**ts the scroll,
+> I am the **`captain`** of my soul.
+>
+> `$ grep [Aa]nd invictus` # 正则表达式，表示字符'A'或者'a'后跟字符串"nd"
+> Beyond this place of wrath **`and`** tear,
+> **`And`** yet the menace of the years,
+> Finds, **`and`** shall find, me unafraid,
+>
+> `$ grep [A-Za-z]ou invictus` # 正则表达式，表示一个任意的大写字母或者一个任意的小写字母后跟字符串"ou"
+> For my unconquerable **`sou`**l,
+> I have not winced nor cried a**`lou`**d,
+> I am the captain of my **`sou`**l.
+>
+> `$ grep [A-Za-z]ou invictus | wc` # 将正则表达式的输出结果使用**wc**命令进行统计
+>       3      18      94 # 3行，18个单词，94个字节
 
 
 
