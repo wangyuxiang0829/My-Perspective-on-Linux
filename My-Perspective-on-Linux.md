@@ -277,7 +277,11 @@ $ ls -l file1.txt
 > I am the captain of my **`sou`**l.
 >
 > `$ grep [A-Za-z]ou invictus | wc` # 将正则表达式的输出结果使用**wc**命令进行统计
->       3      18      94 # 3行，18个单词，94个字节
+>    3      18      94 # 3行，18个单词，94个字节
+
+
+
+---
 
 
 
@@ -382,6 +386,164 @@ Compress or uncompress FILEs (by default, compress FILES in-place).
 # -d 解压缩(decompress)
 ## Examples:
 	gzip -d filename.tar.gz		# 将会生成filename.tar文件
+```
+
+
+
+---
+
+
+
+## Shell 脚本
+
+```shell
+$ cd ~
+$ ls
+invictus
+$ ls > ls.txt # 重定向操作符,重定向输出,`<`将重定向输入
+$ ls
+invictus  ls.txt
+$ cat ls.txt
+invictus
+ls.txt
+$ vim test.sh
+$ ls
+invictus  ls.txt  test.sh
+$ cat test.sh
+ls
+cal
+date
+$ sh test.sh # 运行shell脚本
+invictus  ls.txt  test.sh
+     April 2019
+Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6
+ 7  8  9 10 11 12 13
+14 15 16 17 18 19 20
+21 22 23 24 25 26 27
+28 29 30
+
+Thu Apr 11 22:52:55 DST 2019
+$ vim test.sh
+$ cat test.sh
+a = 10 # 对变量的赋值操作符两边不能有空格
+echo $a
+$ sh test.sh
+test.sh: 1: test.sh: a: not found # 对变量的赋值操作符两边不能有空格
+
+$ vim test.sh
+$ cat test.sh
+a=10 # 对变量的赋值操作符两边不能有空格
+echo $a
+$ sh test.sh
+10
+$ vim test.sh
+$ cat test.sh
+a=10
+echo $a
+echo "Hello World" # 输出字符串
+$ sh test.sh
+10
+Hello World
+$ vim test.sh
+$ cat test.sh
+a=10
+echo $a
+echo "Hello World" $a # 连续输出字符串
+$ sh test.sh
+10
+Hello World 10
+$ vim test.sh
+$ cat test.sh
+a=10
+echo $a
+echo Hello World $a # 字符串可以不带双引号
+$ sh test.sh
+Hello World 10
+$ vim test.sh
+$ cat test.sh
+a=10
+b=3
+c=`expr $a + $b` # 加法操作符
+echo $c
+$ sh test.sh
+13
+$ vim test.sh
+$ cat test.sh
+a=10
+b=3
+c=`expr $a * $b` # 乘法操作符不能这样写,必须进行转义
+echo $c
+$ sh test.sh
+expr: syntax error
+
+$ vim test.sh
+$ cat test.sh
+a=10
+b=3
+c=`expr $a \* $b` # 乘法操作符
+echo $c
+$ sh test.sh
+30
+$ vim test.sh
+$ cat test.sh
+a=10
+b=3
+if [ $a > $b ] # if语句格式,`>`操作符不能这样写
+then
+        echo $a
+else
+        echo $b
+fi # 不能少,表示if语句的结束
+$ sh test.sh
+10
+$ vim test.sh
+$ cat test.sh
+a=1
+b=3
+if [ $a -gt $b ] # `-gt`表示大于
+then
+        echo $a
+else
+        echo $b
+fi
+$ sh test.sh
+3
+$ vim test.sh
+$ cat test.sh
+for x in 1 2 3 4 5 6 7 8 9 # for语句格式
+do
+        echo $x
+done
+$ sh test.sh
+1
+2
+3
+4
+5
+6
+7
+8
+9
+$ vim test.sh
+$ cat test.sh
+x=1
+while [ $x -le 10 ] # while语句格式,`-le`表示小于或等于
+do
+        echo $x
+        x=`expr $x + 1`
+done
+$ sh test.sh
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
 ```
 
 
