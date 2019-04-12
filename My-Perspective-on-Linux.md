@@ -223,61 +223,70 @@ $ ls -l file1.txt
 
 
 
-> `$ ls`
-> invictus
-> `$ cat invictus`
-> Out of the night that covers me,
->
-> Black as the pit from pole to pole,
-> I thank whatever gods may be,
-> For my unconquerable soul,
-> In the fell clutch of circumstance,
-> I have not winced nor cried aloud,
-> Under the bludgeoning of chance,
-> My head if bloody, but unbowed,
->
-> Beyond this place of wrath and tear,
->
-> Looms but the Horror of the shade,
-> And yet the menace of the years,
-> Finds, and shall find, me unafraid,
-> It matters not how strait the gate,
-> How charged with punishments the scroll,
-> I am the master of my fate,
-> I am the captain of my soul.
-> `$ grep Out invictus` # 在指定文件中查找所有与字符串"Out"匹配的行
->
-> **`Out`** of the night that covers me,
-> `$ grep of invictus` # 在指定文件中查找所有与字符串"of"匹配的行
-> Out **`of`** the night that covers me,
-> In the fell clutch **`of`** circumstance,
-> Under the bludgeoning **`of`** chance,
-> Beyond this place **`of`** wrath and tear,
-> Looms but the Horror **`of`** the shade,
-> And yet the menace **`of`** the years,
-> I am the master **`of`** my fate,
-> I am the captain **`of`** my soul.
-> `$ grep c.*n invictus` # 正则表达式，表示字符'c'与'n'之间含有零个或多个任意字符
-> For my un**`con`**querable soul,
-> In the fell **`clutch of circumstan`**ce,
-> I have not win**`ced n`**or cried aloud,
-> Under the bludgeoning of **`chan`**ce,
-> Beyond this pla**`ce *of wrath an`**d tear,
-> How **`charged with punishmen`**ts the scroll,
-> I am the **`captain`** of my soul.
->
-> `$ grep [Aa]nd invictus` # 正则表达式，表示字符'A'或者'a'后跟字符串"nd"
-> Beyond this place of wrath **`and`** tear,
-> **`And`** yet the menace of the years,
-> Finds, **`and`** shall find, me unafraid,
->
-> `$ grep [A-Za-z]ou invictus` # 正则表达式，表示一个任意的大写字母或者一个任意的小写字母后跟字符串"ou"
-> For my unconquerable **`sou`**l,
-> I have not winced nor cried a**`lou`**d,
-> I am the captain of my **`sou`**l.
->
-> `$ grep [A-Za-z]ou invictus | wc` # 将正则表达式的输出结果使用**wc**命令进行统计
->    3      18      94 # 3行，18个单词，94个字节
+```shell
+$ ls
+invictus
+$ cat invictus
+Out of the night that covers me,
+
+Black as the pit from pole to pole,
+I thank whatever gods may be,
+For my unconquerable soul,
+In the fell clutch of circumstance,
+I have not winced nor cried aloud,
+Under the bludgeoning of chance,
+My head if bloody, but unbowed,
+
+Beyond this place of wrath and tear,
+
+Looms but the Horror of the shade,
+And yet the menace of the years,
+Finds, and shall find, me unafraid,
+It matters not how strait the gate,
+How charged with punishments the scroll,
+I am the master of my fate,
+I am the captain of my soul.
+
+$ grep Out invictus # 在指定文件中查找所有与字符串"Out"匹配的行
+
+`Out` of the night that covers me,
+
+$ grep of invictus # 在指定文件中查找所有与字符串"of"匹配的行
+
+Out `of` the night that covers me,
+In the fell clutch `of` circumstance,
+Under the bludgeoning `of` chance,
+Beyond this place `of` wrath and tear,
+Looms but the Horror `of` the shade,
+And yet the menace `of` the years,
+I am the master `of` my fate,
+I am the captain `of` my soul.
+
+$ grep c.*n invictus # 正则表达式，表示字符'c'与'n'之间含有零个或多个任意字符
+
+For my un`con`querable soul,
+In the fell `clutch of circumstan`ce,
+I have not win`ced n`or cried aloud,
+Under the bludgeoning of `chan`ce,
+Beyond this pla`ce of wrath an`d tear,
+How `charged with punishmen`ts the scroll,
+I am the `captain` of my soul.
+
+$ grep [Aa]nd invictus # 正则表达式，表示字符'A'或者'a'后跟字符串"nd"
+
+Beyond this place of wrath `and` tear,
+`And` yet the menace of the years,
+Finds, `and` shall find, me unafraid,
+
+$ grep [A-Za-z]ou invictus # 正则表达式，表示一个任意的大写字母或者一个任意的小写字母后跟字符串"ou"
+
+For my unconquerable `sou`l,
+I have not winced nor cried a`lou`d,
+I am the captain of my `sou`l.
+
+$ grep [A-Za-z]ou invictus | wc # 将正则表达式的输出结果使用wc命令进行统计
+3      18      94 # 3行，18个单词，94个字节
+```
 
 
 
@@ -325,6 +334,114 @@ $ echo $SHELL ##当前用户的默认shell
 ## 打包与解包
 
 ### zip与unzip
+
+```shell
+$ ls # 空目录
+$ touch file1.txt # 创建文件
+$ touch file2.txt # 创建文件
+$ ls
+file1.txt  file2.txt
+$ zip file.zip file1.txt file2.txt # 将file1.txt文件和file2.txt文件打包为file.zip文件
+  adding: file1.txt (stored 0%)
+  adding: file2.txt (stored 0%)
+$ ls
+file.zip  file1.txt  file2.txt
+```
+
+* 如果需要打包的文件很多，则可以使用`-r`选项来递归的打包
+
+```shell
+### 该shell脚本将在该目录下创建10个文本文件
+a=1
+while [ $a -le 10 ]
+do
+        touch file$a.txt
+        a=`expr $a + 1`
+        echo $a
+done
+```
+
+* 我们运行以上脚本来产生足够多的文件，并使用`zip -r`命令全部打包
+
+```shell
+$ ls
+test.sh
+$ sh test.sh # 执行test.sh脚本，创建多个文件
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+$ ls
+file1.txt  file10.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt  file7.txt  file8.txt  file9.txt  test.sh
+$ zip -r file.zip ./ # 将当前目录下的所有文件打包为file.zip文件
+  adding: file1.txt (stored 0%)
+  adding: file10.txt (stored 0%)
+  adding: file2.txt (stored 0%)
+  adding: file3.txt (stored 0%)
+  adding: file4.txt (stored 0%)
+  adding: file5.txt (stored 0%)
+  adding: file6.txt (stored 0%)
+  adding: file7.txt (stored 0%)
+  adding: file8.txt (stored 0%)
+  adding: file9.txt (stored 0%)
+  adding: test.sh (deflated 7%)
+```
+
+* 既然打包完成了，我们可以使用`unzip`命令对`.zip`文件解包，可以使用`-d`选项指定输出目录
+
+```shell
+$ mkdir unzip # 创建unzip/目录，之后会解包到该目录
+$ ls
+file.zip   file10.txt  file3.txt  file5.txt  file7.txt  file9.txt  unzip
+file1.txt  file2.txt   file4.txt  file6.txt  file8.txt  test.sh
+$ unzip file.zip -d unzip/ # 将file.zip文件解包到unzip/目录
+Archive:  file.zip
+ extracting: unzip/file1.txt
+ extracting: unzip/file10.txt
+ extracting: unzip/file2.txt
+ extracting: unzip/file3.txt
+ extracting: unzip/file4.txt
+ extracting: unzip/file5.txt
+ extracting: unzip/file6.txt
+ extracting: unzip/file7.txt
+ extracting: unzip/file8.txt
+ extracting: unzip/file9.txt
+  inflating: unzip/test.sh
+$ ls
+file.zip   file10.txt  file3.txt  file5.txt  file7.txt  file9.txt  unzip
+file1.txt  file2.txt   file4.txt  file6.txt  file8.txt  test.sh
+$ cd unzip/
+$ ls
+file1.txt  file10.txt  file2.txt  file3.txt  file4.txt  file5.txt  file6.txt  file7.txt  file8.txt  file9.txt  test.sh # 解包出来的文件
+```
+
+* 有时候我们并不像解压，只是简单的查看`.zip`文件中所包含的内容，则可以使用`unzip -l`
+
+```shell
+$ unzip -l file.zip # 使用-l选项列出file.zip中所包含的所有文件
+Archive:  file.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  2019-04-12 19:37   file1.txt
+        0  2019-04-12 19:37   file10.txt
+        0  2019-04-12 19:37   file2.txt
+        0  2019-04-12 19:37   file3.txt
+        0  2019-04-12 19:37   file4.txt
+        0  2019-04-12 19:37   file5.txt
+        0  2019-04-12 19:37   file6.txt
+        0  2019-04-12 19:37   file7.txt
+        0  2019-04-12 19:37   file8.txt
+        0  2019-04-12 19:37   file9.txt
+       76  2019-04-12 19:37   test.sh
+---------                     -------
+       76                     11 files
+```
 
 
 
@@ -396,8 +513,53 @@ Compress or uncompress FILEs (by default, compress FILES in-place).
 
 ## Shell 脚本
 
+### 控制语句与变量
+
+#### shell脚本的关系操作符
+
+* `>`	-->	`-gt`
+* `<`        -->        `-lt`
+* `>=`      -->        `-ge`
+* `<=`      -->        `-le`
+* `==`      -->        `-eq`
+* `!=`      -->        `-ne`
+
+#### shell脚本的if语句
+
 ```shell
-$ cd ~
+if [ ... ]
+then
+	...
+	...
+else
+	...
+	...
+fi
+```
+
+#### shell脚本的for语句
+
+```shell
+for x in ...
+do
+	...
+	...
+done
+```
+
+#### shell脚本的while语句
+
+```shell
+while [ ... ]
+do
+	...
+	...
+done
+```
+
+#### 重定向
+
+```shell
 $ ls
 invictus
 $ ls > ls.txt # 重定向操作符,重定向输出,`<`将重定向输入
@@ -406,15 +568,35 @@ invictus  ls.txt
 $ cat ls.txt
 invictus
 ls.txt
-$ vim test.sh
-$ ls
-invictus  ls.txt  test.sh
-$ cat test.sh
+```
+
+#### 操作符
+
+```shell
++  # 加法
+-  # 减法
+\* # 乘法
+/  # 除法
+```
+
+
+
+#### 举例
+
+##### 简单的shell脚本
+
+* 脚本
+
+```shell
 ls
 cal
 date
-$ sh test.sh # 运行shell脚本
-invictus  ls.txt  test.sh
+```
+
+* 输出(运行`sh file.sh`命令)
+
+```
+invictus
      April 2019
 Su Mo Tu We Th Fr Sa
     1  2  3  4  5  6
@@ -424,98 +606,144 @@ Su Mo Tu We Th Fr Sa
 28 29 30
 
 Thu Apr 11 22:52:55 DST 2019
-$ vim test.sh
-$ cat test.sh
-a = 10 # 对变量的赋值操作符两边不能有空格
-echo $a
-$ sh test.sh
-test.sh: 1: test.sh: a: not found # 对变量的赋值操作符两边不能有空格
+```
 
-$ vim test.sh
-$ cat test.sh
+##### 变量的赋值与运行
+
+* 脚本
+
+```shell
 a=10 # 对变量的赋值操作符两边不能有空格
 echo $a
-$ sh test.sh
+```
+
+* 输出
+
+```shell
 10
-$ vim test.sh
-$ cat test.sh
+```
+
+##### 字符串输出
+
+* 脚本
+
+```shell
 a=10
 echo $a
 echo "Hello World" # 输出字符串
-$ sh test.sh
+```
+
+* 输出
+
+```
 10
 Hello World
-$ vim test.sh
-$ cat test.sh
+```
+
+##### 字符串的连续输出
+
+* 脚本
+
+```shell
 a=10
 echo $a
 echo "Hello World" $a # 连续输出字符串
-$ sh test.sh
+```
+
+* 输出
+
+```
 10
 Hello World 10
-$ vim test.sh
-$ cat test.sh
+```
+
+##### echo输出
+
+* 脚本
+
+```shell
 a=10
 echo $a
-echo Hello World $a # 字符串可以不带双引号
-$ sh test.sh
+echo Hello World $a # 字符串可以不带双引号，echo会原封不动的将之后的内容输出，包括空格
+```
+
+* 输出
+
+```
 Hello World 10
-$ vim test.sh
-$ cat test.sh
+```
+
+##### 变量求和并输出
+
+* 脚本
+
+```shell
 a=10
 b=3
 c=`expr $a + $b` # 加法操作符
 echo $c
-$ sh test.sh
-13
-$ vim test.sh
-$ cat test.sh
-a=10
-b=3
-c=`expr $a * $b` # 乘法操作符不能这样写,必须进行转义
-echo $c
-$ sh test.sh
-expr: syntax error
+```
 
-$ vim test.sh
-$ cat test.sh
+* 输出
+
+```
+13
+```
+
+##### 变量求和并输出
+
+* 脚本
+
+```shell
 a=10
 b=3
+# c=`expr $a * $b` # 乘法操作符不能这样写,必须进行转义
 c=`expr $a \* $b` # 乘法操作符
 echo $c
-$ sh test.sh
+```
+
+* 输出
+
+```
 30
-$ vim test.sh
-$ cat test.sh
-a=10
-b=3
-if [ $a > $b ] # if语句格式,`>`操作符不能这样写
-then
-        echo $a
-else
-        echo $b
-fi # 不能少,表示if语句的结束
-$ sh test.sh
-10
-$ vim test.sh
-$ cat test.sh
+```
+
+##### 条件语句
+
+* 脚本
+
+```shell
 a=1
 b=3
+# if [ $a > $b ] # if语句格式,`>`操作符不能这样写
 if [ $a -gt $b ] # `-gt`表示大于
 then
         echo $a
 else
         echo $b
-fi
-$ sh test.sh
+fi # 不能少,表示if语句的结束
+```
+
+* 输出
+
+```
 3
-$ vim test.sh
-$ cat test.sh
+```
+
+##### for循环
+
+* 脚本
+
+```shell
 for x in 1 2 3 4 5 6 7 8 9 # for语句格式
 do
         echo $x
 done
-$ sh test.sh
+```
+
+* 输出
+
+```
 1
 2
 3
@@ -525,15 +753,24 @@ $ sh test.sh
 7
 8
 9
-$ vim test.sh
-$ cat test.sh
+```
+
+##### while循环
+
+* 脚本
+
+```shell
 x=1
 while [ $x -le 10 ] # while语句格式,`-le`表示小于或等于
 do
         echo $x
         x=`expr $x + 1`
 done
-$ sh test.sh
+```
+
+* 输出
+
+```
 1
 2
 3
@@ -544,6 +781,53 @@ $ sh test.sh
 8
 9
 10
+```
+
+
+
+### 字符串与数组
+
+#### 字符串变量
+
+* 脚本
+
+```shell
+a="hello"
+b="world"
+
+echo $a
+echo $b
+```
+
+* 输出
+
+```
+hello
+world
+```
+
+#### 输入与输出
+
+* 脚本
+
+```shell
+echo "Please enter a = "
+read a
+echo "Please enter b = "
+read b
+
+c=`expr $a + $b`
+echo $a + $b = $c
+```
+
+* 输出
+
+```
+Please enter a =
+1
+Please enter b =
+1
+1 + 1 = 2
 ```
 
 
