@@ -2,10 +2,12 @@
 
 ## 基本命令
 
+### 日期与时间
+
 ```shell
 $ date # 查看当前时间
-Mon Apr  8 11:21:24 DST 2019
-$ cal # 查看日历
+Sat Apr 13 14:46:18 DST 2019
+$ cal # 查看当月日历
      April 2019
 Su Mo Tu We Th Fr Sa
     1  2  3  4  5  6
@@ -60,10 +62,13 @@ Su Mo Tu We Th Fr Sa
 20 21 22 23 24 25 26
 27 28 29 30 31
 
-$ which git # 查看某个命令的路径
-/usr/bin/git
+```
 
 
+
+### 文件操作
+
+```shell
 $ cd ~ # 切换到家目录
 $ mkdir tutorial # 创建目录
 $ ls # 查看当前目录信息
@@ -74,8 +79,8 @@ $ touch file1.txt # 创建文件
 $ touch file2.txt # 创建文件
 $ ls
 file1.txt  file2.txt # 创建的文件
-$ vim file1.txt
-$ vim file2.txt
+$ vim file1.txt # 修改文件内容
+$ vim file2.txt # 修改文件内容
 $ cat file1.txt # 输出文件内容
 hello1
 $ cat file2.txt # 输出文件内容
@@ -96,13 +101,16 @@ $ diff file1.txt file2.txt
 $ mv file1.txt helloworld.txt # 对文件重命名
 $ ls
 file2.txt file3.txt helloworld.txt
-$ mv helloworld.txt ../ # 移动文件到指定目录
+$ mv helloworld.txt ../ # 移动文件到指定目录(这里指上一级目录)
 $ rm file2.txt # 删除文件
 $ rm file3.txt
 $ rmdir tutorial/ # 删除目录，不能删除非空目录
+```
 
+### 文件查看
 
-$ cat invictus
+```shell
+$ cat invictus # 输出文件内容
 Out of the night that covers me,
 
 Black as the pit from pole to pole,
@@ -138,6 +146,13 @@ $ wc invictus # 查看文件行数与单词数以及大小
  19 103 559 invictus # 19行 103个单词 559个字节 文件名称
 ```
 
+### 命令路径查看
+
+```shell
+$ which git # 查看某个命令的路径
+/usr/bin/git
+```
+
 
 
 ---
@@ -145,6 +160,8 @@ $ wc invictus # 查看文件行数与单词数以及大小
 
 
 ## 文件结构与权限
+
+### 文件结构
 
 Linux文件属性
 
@@ -198,6 +215,11 @@ dr-xr-xr-x 12 root root     0 Apr  8 11:21 sys
 drwxrwxrwt  1 root root   512 Feb 20 00:34 tmp
 drwxr-xr-x  1 root root   512 Feb 20 00:30 usr
 drwxr-xr-x  1 root root   512 Feb 20 00:30 var
+```
+
+### 权限更改
+
+```shell
 $ cd ~
 $ ls
 $ touch file1.txt # 创建文件
@@ -206,10 +228,10 @@ file1.txt # 刚创建的文件
 $ ls -l file1.txt # 列出文件属性
 -rw-rw-rw- 1 wangyuxiang0829 wangyuxiang0829   0 Apr 10 22:49 file1.txt
 $ chmod 777 file1.txt # 更改文件权限
-$ ls -l file1.txt
+$ ls -l file1.txt # 列出文件属性
 -rwxrwxrwx 1 wangyuxiang0829 wangyuxiang0829   0 Apr 10 22:49 file1.txt
-$ chmod 000 file1.txt
-$ ls -l file1.txt
+$ chmod 000 file1.txt # 更改文件权限
+$ ls -l file1.txt # 列出文件属性
 ---------- 1 wangyuxiang0829 wangyuxiang0829   0 Apr 10 22:49 file1.txt
 ```
 
@@ -570,7 +592,7 @@ invictus
 ls.txt
 ```
 
-#### 操作符
+#### 算术操作符
 
 ```shell
 +  # 加法
@@ -828,6 +850,109 @@ Please enter a =
 Please enter b =
 1
 1 + 1 = 2
+```
+
+#### 字符串的比较
+
+* 脚本
+
+```shell
+password="hello123"
+
+echo "Please enter a password: "
+read userPassword
+
+if [ $password = $userPassword ] # 字符串的比较必须使用单个`=`符号表示相等，'!='表示不相等
+then
+        echo "密码正确"
+else
+        echo "密码错误"
+fi
+```
+
+* 输出
+
+```shell
+Please enter a password:
+hello123
+密码正确
+```
+
+#### 字符串拼接
+
+* 脚本
+
+```shell
+str1="hello"
+str2="world"
+
+str3="$str1 $str2"
+echo $str3
+```
+
+* 输出
+
+```shell
+hello world
+```
+
+#### 判断字符串是否为空
+
+* 脚本
+
+```shell
+string=""
+
+if [ -z $string ] # `-z`表示字符串为空 `-n`表示字符串非空
+then
+        echo "string is zero"
+else
+        echo "string is not zero"
+fi
+```
+
+* 输出
+
+```
+string is zero
+```
+
+#### 数组定义(需要bash运行而不是sh)
+
+* 脚本
+
+```shell
+arr=(7 8 9 10) # 数组定义
+echo ${arr[1]} # 输出下标为1的元素
+```
+
+* 输出(应该使用bash filename.sh命令)
+
+```shell
+# test.sh: 1: test.sh: Syntax error: "(" unexpected # 使用sh命令会报错
+8 # 使用bash命令运行结果
+```
+
+#### 数组遍历
+
+* 脚本
+
+```shell
+arr=(7 8 9 10)
+
+for i in ${arr[@]} # 类似于java中的for-each语法
+do
+        echo $i
+done
+```
+
+* 输出
+
+```shell
+7
+8
+9
+10
 ```
 
 
